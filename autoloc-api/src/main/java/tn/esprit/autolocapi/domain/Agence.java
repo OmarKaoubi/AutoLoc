@@ -1,10 +1,10 @@
 package tn.esprit.autolocapi.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import java.util.*;
 
 @Entity
 @Table(name = "agence")
@@ -12,6 +12,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+
 public class Agence {
 
     @Id
@@ -29,4 +30,12 @@ public class Agence {
 
     @Column(length = 20)
     private String telephone;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "agence")
+    private List<Vehicule> vehicules;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "agence")
+    private List<Employe> employes;
 }

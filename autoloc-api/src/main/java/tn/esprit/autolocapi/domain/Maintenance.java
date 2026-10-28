@@ -1,10 +1,7 @@
 package tn.esprit.autolocapi.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -27,4 +24,8 @@ public class Maintenance {
 
     @Column(length = 500)
     private String description;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "vehicule_id")
+    private Vehicule vehicule;
 }

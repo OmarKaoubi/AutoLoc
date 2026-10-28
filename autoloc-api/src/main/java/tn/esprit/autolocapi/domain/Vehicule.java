@@ -1,12 +1,10 @@
 package tn.esprit.autolocapi.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
+import lombok.*;
 import java.math.BigDecimal;
+import java.util.*;
 
 @Entity
 @Table(name = "vehicule")
@@ -39,4 +37,18 @@ public class Vehicule {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private StatutVehicule statut;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "agence_id")
+    private Agence agence;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "vehicule")
+    private List<Reservation> reservations = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(name = "vehicule_equipement",
+            joinColumns = @JoinColumn(name = "vehicule_id"),
+            inverseJoinColumns = @JoinColumn(name = "equipement_id"))
+    private List<Equipement> equipements = new ArrayList<>();
 }

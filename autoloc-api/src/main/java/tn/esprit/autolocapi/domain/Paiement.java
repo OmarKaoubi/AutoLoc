@@ -1,10 +1,8 @@
 package tn.esprit.autolocapi.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -30,4 +28,9 @@ public class Paiement {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private ModePaiement modePaiement;
+
+    @JsonBackReference("contrat-paiements")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "contrat_id")
+    private Contrat contrat;
 }
